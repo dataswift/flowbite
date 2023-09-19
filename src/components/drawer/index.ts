@@ -158,15 +158,16 @@ class Drawer implements DrawerInterface {
 
     _createBackdrop() {
         if (!this._visible) {
-            const backdropEl = document.createElement('div');
-            backdropEl.setAttribute('drawer-backdrop', '');
-            backdropEl.classList.add(
-                ...this._options.backdropClasses.split(' ')
-            );
-            document.querySelector('body').append(backdropEl);
-            backdropEl.addEventListener('click', () => {
-                this.hide();
-            });
+            const existingBackdrop = document.querySelector('[drawer-backdrop]');
+            if (!existingBackdrop) {
+                const backdropEl = document.createElement('div');
+                backdropEl.setAttribute('drawer-backdrop', '');
+                backdropEl.classList.add(...this._options.backdropClasses.split(' '));
+                document.querySelector('body')!.append(backdropEl);
+                backdropEl.addEventListener('click', () => {
+                    this.hide();
+                });
+            }
         }
     }
 
